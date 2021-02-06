@@ -55,5 +55,6 @@ public class Player : MonoBehaviour
     public void Kill()
     {
         // TODO: Implement death
+        Debug.Log("IS ded");
     }
 }

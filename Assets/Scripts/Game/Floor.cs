@@ -9,7 +9,6 @@ public class Floor : MonoBehaviour
     void Start()
     {
         this.player = GameObject.Find("Player").GetComponent<Player>();
-        Debug.Log(this.player);
     }
 
     // Update is called once per frame
@@ -22,7 +21,6 @@ public class Floor : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            Debug.Log("Floor Collided!!");
             this.player.ResetTimer();
         }
     }
