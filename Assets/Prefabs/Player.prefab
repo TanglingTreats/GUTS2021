@@ -1506,3 +1506,4 @@ MonoBehaviour:
   chatText: {fileID: 1493200767116896040}
   inputField: {fileID: 1493200766770980881}
   canvas: {fileID: 1493200767805452808}
+  gameController: {fileID: 0}
