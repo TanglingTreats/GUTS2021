@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class GapCollision : MonoBehaviour
 {
+    private Player player;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -19,5 +21,9 @@ public class GapCollision : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Collided");
+        if (collision.gameObject.name == "Player")
+        {
+            player.Kill();
+        }
     }
 }
