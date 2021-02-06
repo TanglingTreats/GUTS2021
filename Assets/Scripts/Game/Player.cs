@@ -39,15 +39,15 @@ public class Player : MonoBehaviour
 
     public void Jump(float val)
     {
-        playerBody.velocity = new Vector3 (0, val, 0);
+        playerBody.velocity = new Vector3(0, val, 0);
     }
-    
+
     public void DecreaseTimer(float step)
     {
         this.currTime -= step;
     }
 
-    public void ResetTimer ()
+    public void ResetTimer()
     {
         this.currTime = this.timer;
     }
@@ -55,6 +55,5 @@ public class Player : MonoBehaviour
     public void Kill()
     {
         // TODO: Implement death
-        Debug.Log("IS ded");
     }
 }

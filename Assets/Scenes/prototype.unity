@@ -275,17 +275,17 @@ PrefabInstance:
     - target: {fileID: 1042612067973398713, guid: b9fa843407360014b8232184b9b57920,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.22466211
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1042612067973398713, guid: b9fa843407360014b8232184b9b57920,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2546169
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1042612067973398713, guid: b9fa843407360014b8232184b9b57920,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.22235186
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1042612067973398713, guid: b9fa843407360014b8232184b9b57920,
         type: 3}
@@ -465,6 +465,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TheGap
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683542353573324859, guid: 705614439a905874bbce6c191f58412d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9051985844803952813, guid: 705614439a905874bbce6c191f58412d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 705614439a905874bbce6c191f58412d, type: 3}

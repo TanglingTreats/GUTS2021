@@ -17,7 +17,7 @@ public class TheGap : MonoBehaviour
     }
 
 
-    void Move(float speed)
+    public void Move(float speed)
     {
         transform.Translate(-speed, 0, 0);
     }
@@ -29,27 +29,12 @@ public class TheGap : MonoBehaviour
 
         double gap = gapRange / 100.0 * 0.1;
 
+
         transform.Rotate((float)rotation * 180, 0, 0);
 
-        Debug.Log(this.transform.rotation.x);
-
-        if (this.transform.rotation.x % 1 == 0 && this.transform.rotation.x != 0)
-        {
-            P1.position = new Vector3(transform.position.x, -0.8f - (float)gap, 0);
-            P2.position = new Vector3(transform.position.x, 0.8f + (float)gap, 0);
-        }
-        else
-        {
-            P1.position = new Vector3(transform.position.x, 0.8f + (float)gap, 0);
-            P2.position = new Vector3(transform.position.x, -0.8f - (float)gap, 0);
-        }
-
+        P1.localPosition = new Vector3(0, 0.8f + (float)gap, 0);
+        P2.localPosition = new Vector3(0, -0.8f - (float)gap, 0);
         transform.position = new Vector3(2, (float)y, 0);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        Move(0.2f);
     }
 
 }
