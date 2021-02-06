@@ -466,16 +466,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TheGap
       objectReference: {fileID: 0}
-    - target: {fileID: 8683542353573324859, guid: 705614439a905874bbce6c191f58412d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 9051985844803952813, guid: 705614439a905874bbce6c191f58412d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 705614439a905874bbce6c191f58412d, type: 3}
 --- !u!1001 &8259441310222770443

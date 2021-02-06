@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private float currTime;
     public float jumpVal;
 
+    private int deadCount = 0;
+
     // GameObjects
     private GameObject player;
     private Transform playerPos;
@@ -55,5 +57,7 @@ public class Player : MonoBehaviour
     public void Kill()
     {
         // TODO: Implement death
+        ++deadCount;
+        Debug.Log("dead: " + deadCount);
     }
 }

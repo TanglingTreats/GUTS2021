@@ -38,8 +38,8 @@ public class GameController : MonoBehaviour
     {
         gap.Move(speed);
         speedCounter += 1;
-        if (speedCounter % 60 == 0)
-            speed *= 1.0001f;
+        if (speedCounter % 90 == 0)
+            speed *= 1.001f;
     }
 
 
