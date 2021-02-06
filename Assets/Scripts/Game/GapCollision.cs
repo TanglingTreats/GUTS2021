@@ -20,7 +20,6 @@ public class GapCollision : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collided");
         if (collision.gameObject.name == "Player")
         {
             player.Kill();
