@@ -10,9 +10,13 @@ public class ChatBehaviour : NetworkBehaviour
     [SerializeField] private Text chatText = default;
     [SerializeField] private InputField inputField = default;
     [SerializeField] private GameObject canvas = default;
-
+    [SerializeField] private GameObject gameController = default;
     private static event Action<string> OnMessage;
 
+    public void OnEnable()
+    {
+        gameController = GameObject.Find("GameController");
+    }
 
     public override void OnStartAuthority()
     {
@@ -39,6 +43,8 @@ public class ChatBehaviour : NetworkBehaviour
         if(!Input.GetKeyDown(KeyCode.Return) || string.IsNullOrWhiteSpace(inputField.text) )
             return;
 
+        gameController.GetComponent<GameController>().DoChatLimitCheck((uint) inputField.text.Length);
+        
         CmdSendMessage(inputField.text);
         inputField.text = string.Empty;
     }
