@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
+    GameController gc;
     // Start is called before the first frame update
     void Start()
     {
-
+        gc = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class Wall : MonoBehaviour
     {
         if (collision.gameObject.name == "TheGap")
         {
-            collision.gameObject.GetComponent<TheGap>().Reset();
+            gc.TriggerReset();
         }
     }
 }
