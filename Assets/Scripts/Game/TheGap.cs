@@ -17,7 +17,7 @@ public class TheGap : MonoBehaviour
     }
 
 
-    void Move(float speed)
+    public void Move(float speed)
     {
         transform.Translate(-speed, 0, 0);
     }
@@ -35,11 +35,6 @@ public class TheGap : MonoBehaviour
         P1.localPosition = new Vector3(0, 0.8f + (float)gap, 0);
         P2.localPosition = new Vector3(0, -0.8f - (float)gap, 0);
         transform.position = new Vector3(2, (float)y, 0);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        Move(0.02f);
     }
 
 }

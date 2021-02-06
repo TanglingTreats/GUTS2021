@@ -8,10 +8,16 @@ public class GameController : MonoBehaviour
 {
 
     TheGap gap;
+    float speed = 0.02f;
+    int speedCounter = 0;
     System.Random rand = new System.Random();
     int level;
     List<String[]> levels = new List<String[]>();
     // Start is called before the first frame update
+
+    [SerializeField] private uint chatLimit = 150;
+    public uint charCount = 0;
+
     void Start()
     {
         gap = GameObject.Find("TheGap").GetComponent<TheGap>();
@@ -28,8 +34,14 @@ public class GameController : MonoBehaviour
         }
     }
 
-    [SerializeField] private uint chatLimit = 150;
-    public uint charCount = 0;
+    void Update()
+    {
+        gap.Move(speed);
+        speedCounter += 1;
+        if (speedCounter % 60 == 0)
+            speed *= 1.0001f;
+    }
+
 
     public void DoChatLimitCheck(uint charLen)
     {
