@@ -33,19 +33,40 @@ public class MovePlayer : NetworkBehaviour
     }
     void FixedUpdate () 
     {
+        
         if(this.isLocalPlayer) 
         {
             float movement = Input.GetAxis("Horizontal");	
             GetComponent<Rigidbody2D>().velocity = new Vector2(movement * speed, 0.0f);
             if(Input.GetKeyDown(KeyCode.Q))
             {
-                List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
-                foreach (var playerGO in playerGOs)
-                {
-                    gameObject.GetComponent<ChatBehaviour>().canvas.SetActive(true);
-                    gameObject.GetComponent<MovePlayer>().enabled = false;
-                }
+                StopAllPlayers();
             }
         }
     }
+
+    [Command]
+    void StopAllPlayersRpc()
+    {
+        List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
+        foreach (var playerGO in playerGOs)
+        {
+            Debug.Log("turning off");
+            playerGO.GetComponent<ChatBehaviour>().canvas.SetActive(true);
+            playerGO.GetComponent<MovePlayer>().enabled = false;
+        }
+    }
+
+    void StopAllPlayers()
+    {
+        List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
+        foreach (var playerGO in playerGOs)
+        {
+            Debug.Log("turning off");
+            playerGO.GetComponent<ChatBehaviour>().canvas.SetActive(true);
+            playerGO.GetComponent<MovePlayer>().enabled = false;
+        }
+        StopAllPlayersRpc();
+    }
 }
+
