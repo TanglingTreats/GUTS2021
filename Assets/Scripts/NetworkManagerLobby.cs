@@ -9,10 +9,19 @@ public class NetworkManagerLobby : NetworkManager
 {
     [SerializeField] private int minPlayers = 2;
     [Scene] [SerializeField] private string menuScene = string.Empty;
-
+    /*
+    [Header("Maps")]
+    [SerializeField] private int numberOfRounds = 1;
+    [SerializeField] private MapSet mapSet = null;
+    */
     [Header("Room")]
     [SerializeField] private NetworkRoomPlayerLobby roomPlayerPrefab = default;
-
+    /*
+    [Header("Game")]
+    [SerializeField] private NetworkGamePlayerLobby gamePlayerPrefab = null;
+    [SerializeField] private GameObject playerSpawnSystem = null;
+    [SerializeField] private GameObject roundSystem = null;
+    */
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
     //public static event Action<NetworkConnection> OnServerReadied;
