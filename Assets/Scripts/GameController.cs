@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
     private int level;
+    public int initialLevel;
     private List<String[]> levels = new List<String[]>();
 
     [SerializeField] private uint chatLimit = 150;
@@ -47,7 +48,7 @@ public class GameController : MonoBehaviour
         this.FarEffect = GameObject.Find("FarEffect").GetComponent<ParticleSystem>(); 
 
         level = rand.Next(99);
-
+        initialLevel = level;
         using (var reader = new StreamReader(Application.streamingAssetsPath + "/level.csv"))
         {
             while (!reader.EndOfStream)
