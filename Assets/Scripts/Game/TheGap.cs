@@ -19,7 +19,6 @@ public class TheGap : MonoBehaviour
 
     public void Move(float speed)
     {
-        Debug.Log(speed);
         transform.Translate(-speed, 0, 0);
     }
 

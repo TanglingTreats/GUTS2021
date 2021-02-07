@@ -100,6 +100,8 @@ public class Player : MonoBehaviour
         ++deadCount;
         this.isDead = true;
         this.gc.SetDeathState(true);
+        playerBody.constraints = RigidbodyConstraints2D.None;
+        this.gc.DeathSequence();
 
         Debug.Log("dead: " + deadCount);
     }

@@ -105,6 +105,26 @@ public class GameController : MonoBehaviour
 
         firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
         secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+
+        firstCam.GetComponent<CameraShake>().Shake(0.3f);
+        secondCam.GetComponent<CameraShake>().Shake(0.3f);
+    }
+
+    public void DeathSequence()
+    {
+        colorArray1[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray1[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray1[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+
+        colorArray2[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+
+        firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
+        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+
+        firstCam.GetComponent<CameraShake>().DeathShake();
+        secondCam.GetComponent<CameraShake>().DeathShake();
     }
 
 
@@ -130,6 +150,5 @@ public class GameController : MonoBehaviour
     public void SetDeathState(bool flag)
     {
         this.isDead = flag;
-        Debug.Log(this.isDead);
     }
 }
