@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     private int deadCount = 0;
 
+    private bool isReleased = false;
     private bool isDead = false;
 
     // GameObjects
@@ -39,10 +40,15 @@ public class Player : MonoBehaviour
 
         if(!isDead)
         {
-            if (Input.GetButton("Jump") && this.currTime > 0)
+            if (Input.GetButton("Jump") && this.currTime > 0 && !GetIsReleased())
             {
                 Jump(this.jumpVal);
                 DecreaseTimer(0.1f);
+            }
+            else if (Input.GetButtonUp("Jump"))
+            {
+                SetIsReleased(true);
+
             }
         }
     }
@@ -57,8 +63,19 @@ public class Player : MonoBehaviour
         this.currTime -= step;
     }
 
-    public void ResetTimer()
+    public void SetIsReleased(bool flag)
     {
+        this.isReleased = flag;
+    }
+
+    public bool GetIsReleased()
+    {
+        return this.isReleased;
+    }
+
+    public void ResetJump()
+    {
+        SetIsReleased(false);
         this.currTime = this.timer;
     }
 
