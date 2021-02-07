@@ -15,7 +15,7 @@ public class MovePlayer : NetworkBehaviour
         if (playerGOs.Count >= 2)
         {
             GameObject.Find("Player").GetComponent<Player>().FindChatBoxes();
-            GetComponent<ChatBehaviour>().CmdSendResume();
+            GetComponent<ChatBehaviour>().SendResume();
         }
     }
     void OnEnable()

@@ -52,8 +52,8 @@ public class GameController : MonoBehaviour
         }
 
         // Get Camera
-        firstCam = GameObject.Find("Player1 Camera").GetComponent<Camera>();
-        secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
+        // firstCam = GameObject.Find("Player1 Camera").GetComponent<Camera>();
+        // secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
     }
 
     void FixedUpdate()
@@ -96,8 +96,8 @@ public class GameController : MonoBehaviour
             colorStep = -colorStep;
         }
 
-        firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
-        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+        // firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
+        // secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
     }
 
     public void Pulse()
@@ -110,11 +110,11 @@ public class GameController : MonoBehaviour
         colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
         colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
 
-        firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
-        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
-
-        firstCam.GetComponent<CameraShake>().Shake(0.3f);
-        secondCam.GetComponent<CameraShake>().Shake(0.3f);
+        // firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
+        // secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+        //
+        // firstCam.GetComponent<CameraShake>().Shake(0.3f);
+        // secondCam.GetComponent<CameraShake>().Shake(0.3f);
     }
 
     public void DeathSequence()
