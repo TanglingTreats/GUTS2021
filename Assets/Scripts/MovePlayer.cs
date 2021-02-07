@@ -12,19 +12,9 @@ public class MovePlayer : NetworkBehaviour
     void Start()
     {
         List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
-        if (playerGOs.Count < 2)
+        if (playerGOs.Count >= 2)
         {
-            foreach (var playerGO in playerGOs)
-            {
-                playerGO.GetComponent<MovePlayer>().enabled = false;
-            }
-        }
-        else
-        {
-            foreach (var playerGO in playerGOs)
-            {
-                playerGO.GetComponent<MovePlayer>().enabled = true;
-            }
+            GetComponent<ChatBehaviour>().CmdSendResume();
         }
     }
     void OnEnable()

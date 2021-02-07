@@ -48,6 +48,8 @@ public class ChatBehaviour : NetworkBehaviour
 
     private void HandleResume()
     {
+        gameController.GetComponent<GameController>().SetPauseState(false);
+        GameObject.Find("Player").GetComponent<Rigidbody2D>().WakeUp();
         canvas.SetActive(false);
         gameController.GetComponent<GameController>().charCount = 0;      
         gameObject.GetComponent<MovePlayer>().enabled = true;
@@ -72,7 +74,7 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSendResume()
+    public void CmdSendResume()
     {
         RpcHandleResume();
     }
