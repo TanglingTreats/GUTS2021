@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System.IO;
 
@@ -108,13 +109,9 @@ public class GameController : MonoBehaviour
     }
 
 
-    public void DoChatLimitCheck(uint charLen)
+    public void DoAddChatLen(uint charLen)
     {
         charCount += charLen;
-        if (charCount >= chatLimit)
-        {
-            Debug.Log("Game Over.");
-        }
     }
 
     public void TriggerReset(int gapNumber)
@@ -132,4 +129,10 @@ public class GameController : MonoBehaviour
         this.isDead = flag;
         Debug.Log(this.isDead);
     }
+    public bool IsChatReachedLimit()
+    {
+        return charCount >= chatLimit;
+    }
+
+    
 }

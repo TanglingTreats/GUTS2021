@@ -9,18 +9,19 @@ public class ChatBehaviour : NetworkBehaviour
 {
     [SerializeField] private Text chatText = default;
     [SerializeField] private InputField inputField = default;
-    [SerializeField] private GameObject canvas = default;
+    [SerializeField] public GameObject canvas = default;
     [SerializeField] private GameObject gameController = default;
     private static event Action<string> OnMessage;
 
     public void OnEnable()
     {
         gameController = GameObject.Find("GameController");
+        canvas.SetActive(false);
     }
 
     public override void OnStartAuthority()
     {
-        canvas.SetActive(true);
+        //canvas.SetActive(true);
         OnMessage += HandleNewMessage;
     }
 
@@ -43,10 +44,15 @@ public class ChatBehaviour : NetworkBehaviour
         if(!Input.GetKeyDown(KeyCode.Return) || string.IsNullOrWhiteSpace(inputField.text) )
             return;
 
-        gameController.GetComponent<GameController>().DoChatLimitCheck((uint) inputField.text.Length);
-        
+        gameController.GetComponent<GameController>().DoAddChatLen((uint) inputField.text.Length);
         CmdSendMessage(inputField.text);
         inputField.text = string.Empty;
+        if(gameController.GetComponent<GameController>().IsChatReachedLimit())
+        {
+            canvas.SetActive(false);  
+            gameController.GetComponent<GameController>().charCount = 0;      
+            gameObject.GetComponent<MovePlayer>().enabled = true;
+        }
     }
 
     [Command]
