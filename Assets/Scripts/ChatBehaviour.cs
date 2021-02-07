@@ -19,6 +19,7 @@ public class ChatBehaviour : NetworkBehaviour
     public void OnEnable()
     {
         gameController = GameObject.Find("GameController");
+        canvas = GameObject.Find("Restart Canvas");
         canvas.SetActive(false);
     }
 
