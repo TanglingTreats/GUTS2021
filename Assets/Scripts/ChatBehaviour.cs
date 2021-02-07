@@ -20,7 +20,7 @@ public class ChatBehaviour : NetworkBehaviour
     {
         gameController = GameObject.Find("GameController");
         canvas = GameObject.Find("Restart Canvas");
-        canvas.SetActive(false);
+        canvas.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public override void OnStartAuthority()
@@ -45,7 +45,7 @@ public class ChatBehaviour : NetworkBehaviour
     {
         GameObject player = GameObject.Find("Player");
         gameObject.GetComponent<MovePlayer>().enabled = false;
-        canvas.SetActive(true);
+         canvas.transform.GetChild(0).gameObject.SetActive(true);
         player.GetComponent<Player>().isDead = true;
         gameController.GetComponent<GameController>().SetDeathState(true);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
@@ -56,7 +56,7 @@ public class ChatBehaviour : NetworkBehaviour
     private void HandleResume()
     {
         gameController.GetComponent<GameController>().SetPauseState(false);
-        canvas.SetActive(false);
+        canvas.transform.GetChild(0).gameObject.SetActive(false);
         GameObject.Find("Player").GetComponent<Rigidbody2D>().WakeUp();
         gameObject.GetComponent<MovePlayer>().enabled = true;
     }
