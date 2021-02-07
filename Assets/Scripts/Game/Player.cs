@@ -11,11 +11,15 @@ public class Player : MonoBehaviour
 
     private int deadCount = 0;
 
+    private bool isReleased = false;
+    private bool isDead = false;
+
     // GameObjects
     private GameObject player;
     private Transform playerPos;
     private Rigidbody2D playerBody;
 
+    private GameController gc;
 
 
     // Start is called before the first frame update
@@ -25,6 +29,8 @@ public class Player : MonoBehaviour
         this.playerPos = player.GetComponent<Transform>();
         this.playerBody = player.GetComponent<Rigidbody2D>();
 
+        this.gc = GameObject.Find("GameController").GetComponent<GameController>();
+
         this.currTime = this.timer;
     }
 
@@ -32,10 +38,18 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetButton("Jump") && this.currTime > 0)
+        if(!isDead)
         {
-            Jump(this.jumpVal);
-            DecreaseTimer(0.1f);
+            if (Input.GetButton("Jump") && this.currTime > 0 && !GetIsReleased())
+            {
+                Jump(this.jumpVal);
+                DecreaseTimer(0.1f);
+            }
+            else if (Input.GetButtonUp("Jump"))
+            {
+                SetIsReleased(true);
+
+            }
         }
     }
 
@@ -49,15 +63,28 @@ public class Player : MonoBehaviour
         this.currTime -= step;
     }
 
-    public void ResetTimer()
+    public void SetIsReleased(bool flag)
     {
+        this.isReleased = flag;
+    }
+
+    public bool GetIsReleased()
+    {
+        return this.isReleased;
+    }
+
+    public void ResetJump()
+    {
+        SetIsReleased(false);
         this.currTime = this.timer;
     }
 
     public void Kill()
     {
-        // TODO: Implement death
         ++deadCount;
+        this.isDead = true;
+        this.gc.SetDeathState(true);
+
         Debug.Log("dead: " + deadCount);
     }
 }

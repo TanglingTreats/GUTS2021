@@ -23,7 +23,7 @@ public class Floor : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            this.player.ResetTimer();
+            this.player.ResetJump();
             this.gc.Pulse();
         }
     }
