@@ -15,6 +15,8 @@ public class ChatBehaviour : NetworkBehaviour
     private static event Action OnDeath;
     private static event Action OnResume;
 
+    private static event Action<float> OnJump;
+
     public void OnEnable()
     {
         gameController = GameObject.Find("GameController");
@@ -27,6 +29,7 @@ public class ChatBehaviour : NetworkBehaviour
         OnMessage += HandleNewMessage;
         OnDeath += HandleDeath;
         OnResume += HandleResume;
+        OnJump += HandleJump;
     }
 
     [ClientCallback]
@@ -37,6 +40,7 @@ public class ChatBehaviour : NetworkBehaviour
         OnMessage -= HandleNewMessage;
         OnDeath -= HandleDeath;
         OnResume -= HandleResume;
+        OnJump -= HandleJump;
     }
 
     private void HandleDeath()
@@ -64,6 +68,13 @@ public class ChatBehaviour : NetworkBehaviour
         }
     }
 
+    private void HandleJump(float val)
+    {
+        GameObject player = GameObject.Find("Player");
+        player.GetComponent<Rigidbody2D>().velocity = new Vector3(0, val, 0);
+        player.GetComponent<Player>().DecreaseTimer(0.1f);
+    }
+
     [Client]
     public void Send()
     {
@@ -73,6 +84,17 @@ public class ChatBehaviour : NetworkBehaviour
         inputField.text = string.Empty;
     }
 
+    [Client]
+    public void SendJump(float val)
+    {
+        CmdSendJump(val);
+    }
+
+    [Command]
+    public void CmdSendJump(float val)
+    {
+        RpcHandleJump(val);
+    }
     [Command]
     public void CmdSendResume()
     {
@@ -107,6 +129,12 @@ public class ChatBehaviour : NetworkBehaviour
     private void RpcHandleMessage(string message)
     {
         OnMessage?.Invoke($"\n{message}");
+    }
+
+    [ClientRpc]
+    private void RpcHandleJump(float val)
+    {
+        OnJump?.Invoke(val);
     }
     
 }

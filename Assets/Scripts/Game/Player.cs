@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Mirror;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     // Timer is in seconds
     public float timer;
@@ -73,11 +75,17 @@ public class Player : MonoBehaviour
             }
         }
     }
-
+    
     public void Jump(float val)
     {
-        playerBody.velocity = new Vector3(0, val, 0);
-        DecreaseTimer(0.1f);
+        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        players.ForEach(x =>
+        {
+            if(x.GetComponent<NetworkIdentity>().isLocalPlayer)
+                x.GetComponent<ChatBehaviour>().SendJump(val);
+        });
+        //playerBody.velocity = new Vector3(0, val, 0);
+        //DecreaseTimer(0.1f);
     }
 
     public void DecreaseTimer(float step)
