@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private GameObject player;
     private Transform playerPos;
     private Rigidbody2D playerBody;
+    private ParticleSystem buttSpark;
 
     private GameController gc;
 
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
         this.player = GameObject.Find("Player");
         this.playerPos = player.GetComponent<Transform>();
         this.playerBody = player.GetComponent<Rigidbody2D>();
+        this.buttSpark = GameObject.Find("CubeSparks").GetComponent<ParticleSystem>();
 
         this.gc = GameObject.Find("GameController").GetComponent<GameController>();
 
@@ -49,6 +51,7 @@ public class Player : MonoBehaviour
             {
                 if (this.currTime == this.timer && this.isReleased && this.isLanded)
                 {
+                    this.buttSpark.Stop();
                     this.isLanded = false;
                     this.jump = true;
                 }
@@ -86,6 +89,8 @@ public class Player : MonoBehaviour
 
     public void Land()
     {
+        if (!this.isDead)
+            this.buttSpark.Play();
         this.isLanded = true;
         this.ResetJump();
     }
@@ -99,6 +104,7 @@ public class Player : MonoBehaviour
     {
         ++deadCount;
         this.isDead = true;
+        this.buttSpark.Stop();
         this.gc.SetDeathState(true);
         playerBody.constraints = RigidbodyConstraints2D.None;
         this.gc.DeathSequence();
