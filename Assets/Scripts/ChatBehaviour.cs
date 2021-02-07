@@ -41,6 +41,7 @@ public class ChatBehaviour : NetworkBehaviour
 
     private void HandleDeath()
     {
+        chatText.text = String.Empty;;
         canvas.gameObject.SetActive(true);
         gameObject.GetComponent<MovePlayer>().enabled = false;
     }
@@ -53,7 +54,12 @@ public class ChatBehaviour : NetworkBehaviour
     }
     private void HandleNewMessage(string message)
     {
+        gameController.GetComponent<GameController>().DoAddChatLen((uint) message.Length);
         chatText.text += message;
+        if(gameController.GetComponent<GameController>().IsChatReachedLimit())
+        {
+            CmdSendResume();
+        }
     }
 
     [Client]
@@ -61,14 +67,8 @@ public class ChatBehaviour : NetworkBehaviour
     {
         if(!Input.GetKeyDown(KeyCode.Return) || string.IsNullOrWhiteSpace(inputField.text) )
             return;
-
-        gameController.GetComponent<GameController>().DoAddChatLen((uint) inputField.text.Length);
         CmdSendMessage(inputField.text);
         inputField.text = string.Empty;
-        if(gameController.GetComponent<GameController>().IsChatReachedLimit())
-        {
-            CmdSendResume();
-        }
     }
 
     [Command]
@@ -107,27 +107,4 @@ public class ChatBehaviour : NetworkBehaviour
         OnMessage?.Invoke($"\n{message}");
     }
     
-    // [Command]
-    // void StopAllPlayersRpc()
-    // {
-    //     List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
-    //     foreach (var playerGO in playerGOs)
-    //     {
-    //         Debug.Log("turning off");
-    //         //playerGO.GetComponent<ChatBehaviour>().canvas.SetActive(true);
-    //         playerGO.GetComponent<MovePlayer>().enabled = false;
-    //     }
-    // }
-
-    // void StopAllPlayers()
-    // {
-    //     List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
-    //     foreach (var playerGO in playerGOs)
-    //     {
-    //         Debug.Log("turning off");
-    //         //playerGO.GetComponent<ChatBehaviour>().canvas.SetActive(true);
-    //         playerGO.GetComponent<MovePlayer>().enabled = false;
-    //     }
-    //     StopAllPlayersRpc();
-    // }
 }
