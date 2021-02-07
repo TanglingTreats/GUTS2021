@@ -19,7 +19,7 @@ public class Player : NetworkBehaviour
     private bool jump = false;
 
 
-    private bool isDead = false;
+    public bool isDead = false;
 
     // GameObjects
     private GameObject player;
@@ -28,6 +28,7 @@ public class Player : NetworkBehaviour
 
     private GameController gc;
 
+    private List<GameObject> chatBoxes = default;
 
     // Start is called before the first frame update
     void Start()
@@ -71,15 +72,18 @@ public class Player : NetworkBehaviour
             if (this.jump)
             {
                 Jump(this.jumpVal);
-                DecreaseTimer(0.1f);
             }
         }
+    }
+
+    public void FindChatBoxes()
+    {
+        chatBoxes = GameObject.FindGameObjectsWithTag("Player").ToList();
     }
     
     public void Jump(float val)
     {
-        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
-        players.ForEach(x =>
+        chatBoxes.ForEach(x =>
         {
             if(x.GetComponent<NetworkIdentity>().isLocalPlayer)
                 x.GetComponent<ChatBehaviour>().SendJump(val);
@@ -107,11 +111,12 @@ public class Player : NetworkBehaviour
     public void Kill()
     {
         ++deadCount;
-        this.isDead = true;
-        this.gc.SetDeathState(true);
-        playerBody.constraints = RigidbodyConstraints2D.None;
-        this.gc.DeathSequence();
 
         Debug.Log("dead: " + deadCount);
+        chatBoxes.ForEach(x =>
+        {
+            if(x.GetComponent<NetworkIdentity>().isLocalPlayer)
+                x.GetComponent<ChatBehaviour>().CmdSendDeath();
+        });
     }
 }

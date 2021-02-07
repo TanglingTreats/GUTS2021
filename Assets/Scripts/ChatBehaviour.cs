@@ -45,9 +45,15 @@ public class ChatBehaviour : NetworkBehaviour
 
     private void HandleDeath()
     {
+        GameObject player = GameObject.Find("Player");
         chatText.text = String.Empty;;
         canvas.gameObject.SetActive(true);
         gameObject.GetComponent<MovePlayer>().enabled = false;
+
+        player.GetComponent<Player>().isDead = true;
+        gameController.GetComponent<GameController>().SetDeathState(true);
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        gameController.GetComponent<GameController>().DeathSequence();
     }
 
     private void HandleResume()
