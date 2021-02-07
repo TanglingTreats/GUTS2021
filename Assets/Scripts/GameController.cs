@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     private TheGap gap2;
 
     private Rigidbody2D playerRb;
-    public float speed = 0.2f;
+    [SerializeField] private float speed;
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
     private int level;
