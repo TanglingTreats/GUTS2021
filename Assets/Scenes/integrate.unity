@@ -121,12 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!50 &406666839 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 6830632471379021672, guid: 2c5dae52bb1e8c7458e08c0cb371b254,
-    type: 3}
-  m_PrefabInstance: {fileID: 1872438275}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1872438275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -625,11 +619,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5725793760708335585, guid: e985f6cb096b2724384ccd4d8ac9ffab,
-        type: 3}
-      propertyPath: playerRb
-      value: 
-      objectReference: {fileID: 406666839}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e985f6cb096b2724384ccd4d8ac9ffab, type: 3}
 --- !u!1001 &8711817212913916387
