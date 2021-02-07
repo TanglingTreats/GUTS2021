@@ -121,6 +121,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!20 &214071933 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 566577566537196490, guid: bc9a5e3cac58afa48b45645deac2747d,
+    type: 3}
+  m_PrefabInstance: {fileID: 566577565845180734}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1792361830 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4450649106044535686, guid: 735dfb9d9e456df4b841a2af49a7eae8,
+    type: 3}
+  m_PrefabInstance: {fileID: 4450649107029336498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1872438275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187,6 +199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616326416379141991, guid: 2c5dae52bb1e8c7458e08c0cb371b254,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c5dae52bb1e8c7458e08c0cb371b254, type: 3}
@@ -411,6 +428,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TheGap2
       objectReference: {fileID: 0}
+    - target: {fileID: 5346340333300463026, guid: c67f9ba0b5e839142a8c4ff6194f1572,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c67f9ba0b5e839142a8c4ff6194f1572, type: 3}
 --- !u!1001 &4450649107029336498
@@ -424,6 +446,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player2 Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450649106044535686, guid: 735dfb9d9e456df4b841a2af49a7eae8,
+        type: 3}
+      propertyPath: m_TargetDisplay
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4450649106044535687, guid: 735dfb9d9e456df4b841a2af49a7eae8,
         type: 3}
@@ -494,6 +521,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TheGap1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215058277125453383, guid: 94f648e0713144f41a71e8cbbc1a83ee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5404429047126661487, guid: 94f648e0713144f41a71e8cbbc1a83ee,
         type: 3}
@@ -619,6 +651,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5725793760708335585, guid: e985f6cb096b2724384ccd4d8ac9ffab,
+        type: 3}
+      propertyPath: speed
+      value: 0.04
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e985f6cb096b2724384ccd4d8ac9ffab, type: 3}
 --- !u!1001 &8711817212913916387
@@ -630,10 +667,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1626761273472170225, guid: b8cd7b8510eb5604d889549a07b96140,
         type: 3}
-      propertyPath: playerPrefab
+      propertyPath: camera1
       value: 
-      objectReference: {fileID: 1493200768174195431, guid: c1aa03db641d2b04c8c00b4724a56638,
+      objectReference: {fileID: 214071933}
+    - target: {fileID: 1626761273472170225, guid: b8cd7b8510eb5604d889549a07b96140,
         type: 3}
+      propertyPath: camera2
+      value: 
+      objectReference: {fileID: 1792361830}
     - target: {fileID: 4007178681200648512, guid: b8cd7b8510eb5604d889549a07b96140,
         type: 3}
       propertyPath: m_Name

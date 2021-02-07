@@ -23,6 +23,7 @@ namespace Mirror
     [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkManager.html")]
     public class NetworkManager : MonoBehaviour
     {
+        public Camera camera1, camera2;
         static readonly ILogger logger = LogFactory.GetLogger<NetworkManager>();
 
         /// <summary>
@@ -1402,6 +1403,8 @@ namespace Mirror
         /// <param name="conn">Connection to the server.</param>
         public virtual void OnClientConnect(NetworkConnection conn)
         {
+            camera1.enabled = false;
+            camera2.enabled = true;
             // OnClientConnect by default calls AddPlayer but it should not do
             // that when we have online/offline scenes. so we need the
             // clientLoadedScene flag to prevent it.
