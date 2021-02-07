@@ -99,6 +99,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   gameController: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!1 &3257198255228708650
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4168458986553684253
 RectTransform:
   m_ObjectHideFlags: 0

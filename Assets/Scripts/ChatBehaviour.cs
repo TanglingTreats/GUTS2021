@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class ChatBehaviour : NetworkBehaviour
 {
     [SerializeField] private GameObject gameController = default;
+    
+    [SerializeField] private GameObject canvas = default;
     private static event Action<string> OnMessage;
     private static event Action OnDeath;
     private static event Action OnResume;
@@ -17,6 +19,7 @@ public class ChatBehaviour : NetworkBehaviour
     public void OnEnable()
     {
         gameController = GameObject.Find("GameController");
+        canvas.SetActive(false);
     }
 
     public override void OnStartAuthority()
@@ -41,7 +44,7 @@ public class ChatBehaviour : NetworkBehaviour
     {
         GameObject player = GameObject.Find("Player");
         gameObject.GetComponent<MovePlayer>().enabled = false;
-
+        canvas.SetActive(true);
         player.GetComponent<Player>().isDead = true;
         gameController.GetComponent<GameController>().SetDeathState(true);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
@@ -52,6 +55,7 @@ public class ChatBehaviour : NetworkBehaviour
     private void HandleResume()
     {
         gameController.GetComponent<GameController>().SetPauseState(false);
+        canvas.SetActive(false);
         GameObject.Find("Player").GetComponent<Rigidbody2D>().WakeUp();
         gameObject.GetComponent<MovePlayer>().enabled = true;
     }
