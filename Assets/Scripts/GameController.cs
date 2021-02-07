@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
 
     private TheGap gap1;
     private TheGap gap2;
+    
     public float speed = 0.2f;
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
@@ -93,36 +94,37 @@ public class GameController : MonoBehaviour
         secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
     }
 
-    public void Pulse()
+    float genColor()
     {
-        colorArray1[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray1[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray1[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        return (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+    }
 
-        colorArray2[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+    private void changeColor()
+    {
+        colorArray1[0] = genColor();
+        colorArray1[1] = genColor();
+        colorArray1[2] = genColor();
+
+        colorArray2[0] = genColor();
+        colorArray2[1] = genColor();
+        colorArray2[2] = genColor();
 
         firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
         secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+    }
 
+    public void Pulse()
+    {
+        changeColor();
+        
         firstCam.GetComponent<CameraShake>().Shake(0.3f);
         secondCam.GetComponent<CameraShake>().Shake(0.3f);
     }
 
     public void DeathSequence()
     {
-        colorArray1[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray1[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray1[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-
-        colorArray2[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-
-        firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
-        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
-
+        changeColor();
+        
         firstCam.GetComponent<CameraShake>().DeathShake();
         secondCam.GetComponent<CameraShake>().DeathShake();
     }
