@@ -8,7 +8,7 @@ public class Wall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gc = GameObject.Find("GameController").GetComponent<GameController>();
+        this.gc = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class Wall : MonoBehaviour
     {
         if (collision.gameObject.name == "TheGap")
         {
-            gc.TriggerReset();
+            this.gc.TriggerReset();
         }
     }
 }

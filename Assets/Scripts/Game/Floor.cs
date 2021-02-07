@@ -5,10 +5,12 @@ using UnityEngine;
 public class Floor : MonoBehaviour
 {
     private Player player;
+    GameController gc;
     // Start is called before the first frame update
     void Start()
     {
         this.player = GameObject.Find("Player").GetComponent<Player>();
+        this.gc = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -22,6 +24,7 @@ public class Floor : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             this.player.ResetTimer();
+            this.gc.Pulse();
         }
     }
 }
