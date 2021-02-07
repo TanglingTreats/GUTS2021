@@ -5,6 +5,7 @@ using UnityEngine;
 public class Floor : MonoBehaviour
 {
     private Player player;
+
     GameController gc;
     // Start is called before the first frame update
     void Start()
@@ -16,14 +17,14 @@ public class Floor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void OnCollisionEnter2D (Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
-            this.player.ResetJump();
+            this.player.Land();
             this.gc.Pulse();
         }
     }

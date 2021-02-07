@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     private TheGap gap2;
 
     private Rigidbody2D playerRb;
-    public float speed = 0.02f;
+    public float speed = 0.2f;
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
     private int level;
@@ -56,23 +56,20 @@ public class GameController : MonoBehaviour
         secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (!isPause)
+        if (!isPause && !isDead)
         {
-            if (!isDead)
-            {
-                gap1.Move(speed);
-                gap2.Move(speed);
-                speedCounter += 1;
-                if (speedCounter % 90 == 0)
-                    speed *= 1.001f;
-                UpdateColor();
-            } 
-            else 
-            {
-                // Do death stuff, trigger chat etc
-            }
+            gap1.Move(speed);
+            gap2.Move(speed);
+            speedCounter += 1;
+            if (speedCounter % 90 == 0)
+                speed *= 1.001f;
+            UpdateColor();
+        }
+        else
+        {
+            // Do death stuff, trigger chat etc
         }
 
     }
@@ -115,12 +112,36 @@ public class GameController : MonoBehaviour
 
         firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
         secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+
+        firstCam.GetComponent<CameraShake>().Shake(0.3f);
+        secondCam.GetComponent<CameraShake>().Shake(0.3f);
+    }
+
+    public void DeathSequence()
+    {
+        colorArray1[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray1[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray1[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+
+        colorArray2[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+
+        firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
+        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+
+        firstCam.GetComponent<CameraShake>().DeathShake();
+        secondCam.GetComponent<CameraShake>().DeathShake();
     }
 
 
-    public void DoAddChatLen(uint charLen)
+    public void DoChatLimitCheck(uint charLen)
     {
         charCount += charLen;
+        if (charCount >= chatLimit)
+        {
+            Debug.Log("Game Over.");
+        }
     }
 
     public void TriggerReset(int gapNumber)
@@ -133,6 +154,10 @@ public class GameController : MonoBehaviour
         level = (level + 1) % 100;
     }
 
+    public void DoAddChatLen(uint charLen)
+    {
+        charCount += charLen;
+    }
     public void SetDeathState(bool flag)
     {
         this.isDead = flag;

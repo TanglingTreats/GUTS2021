@@ -11,7 +11,12 @@ public class Player : MonoBehaviour
 
     private int deadCount = 0;
 
-    private bool isReleased = false;
+    private bool isReleased = true;
+    private bool isLanded = true;
+
+    private bool jump = false;
+
+
     private bool isDead = false;
 
     // GameObjects
@@ -40,15 +45,31 @@ public class Player : MonoBehaviour
 
         if(!gc.GetPauseState() && !isDead)
         {
-            if (Input.GetButton("Jump") && this.currTime > 0 && !GetIsReleased())
+            // Initial jump
+            if (Input.GetButton("Jump"))
+            {
+                if (this.currTime == this.timer && this.isReleased && this.isLanded)
+                {
+                    this.isLanded = false;
+                    this.jump = true;
+                }
+                this.isReleased = false;
+            }
+
+            if (Input.GetButtonUp("Jump"))
+            {
+                this.isReleased = true;
+            }
+
+            if (this.currTime <= 0 || this.isReleased)
+            {
+                this.jump = false;
+            }
+
+            if (this.jump)
             {
                 Jump(this.jumpVal);
                 DecreaseTimer(0.1f);
-            }
-            else if (Input.GetButtonUp("Jump"))
-            {
-                SetIsReleased(true);
-
             }
         }
     }
@@ -56,6 +77,7 @@ public class Player : MonoBehaviour
     public void Jump(float val)
     {
         playerBody.velocity = new Vector3(0, val, 0);
+        DecreaseTimer(0.1f);
     }
 
     public void DecreaseTimer(float step)
@@ -63,19 +85,14 @@ public class Player : MonoBehaviour
         this.currTime -= step;
     }
 
-    public void SetIsReleased(bool flag)
+    public void Land()
     {
-        this.isReleased = flag;
-    }
-
-    public bool GetIsReleased()
-    {
-        return this.isReleased;
+        this.isLanded = true;
+        this.ResetJump();
     }
 
     public void ResetJump()
     {
-        SetIsReleased(false);
         this.currTime = this.timer;
     }
 
@@ -84,6 +101,8 @@ public class Player : MonoBehaviour
         ++deadCount;
         this.isDead = true;
         this.gc.SetDeathState(true);
+        playerBody.constraints = RigidbodyConstraints2D.None;
+        this.gc.DeathSequence();
 
         Debug.Log("dead: " + deadCount);
     }
