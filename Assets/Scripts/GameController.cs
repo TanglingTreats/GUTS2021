@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
 
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
-    private int level;
+    public int level;
     public int initialLevel;
     private List<String[]> levels = new List<String[]>();
 
@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
 
         // Get Camera
         // firstCam = GameObject.Find("Player1 Camera").GetComponent<Camera>();
-        secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
+        // secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
     }
 
     void FixedUpdate()
@@ -105,7 +105,7 @@ public class GameController : MonoBehaviour
         }
 
         // firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
-        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+        // secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
     }
 
     float genColor()
@@ -130,7 +130,7 @@ public class GameController : MonoBehaviour
         changeColor();
         
         // firstCam.GetComponent<CameraShake>().Shake(0.3f);
-        secondCam.GetComponent<CameraShake>().Shake(0.3f);
+        // secondCam.GetComponent<CameraShake>().Shake(0.3f);
     }
 
     public void DeathSequence()
@@ -141,7 +141,7 @@ public class GameController : MonoBehaviour
         this.FarEffect.Pause();
         
         // firstCam.GetComponent<CameraShake>().DeathShake();
-        secondCam.GetComponent<CameraShake>().DeathShake();
+        // secondCam.GetComponent<CameraShake>().DeathShake();
     }
 
 
@@ -162,6 +162,12 @@ public class GameController : MonoBehaviour
             gap2.Reset(Int32.Parse(levels[level][0]), Int32.Parse(levels[level][1]), Int32.Parse(levels[level][2]), Int32.Parse(levels[level][3]), Int32.Parse(levels[level][4]));
 
         level = (level + 1) % 100;
+    }
+
+    public void ResetGaps()
+    {
+        gap1.transform.position = new Vector3(3.0f, -0.2f, 0.0f);
+        gap2.transform.position = new Vector3(-2.0f, -0.2f, 0.0f);
     }
 
     public void DoAddChatLen(uint charLen)

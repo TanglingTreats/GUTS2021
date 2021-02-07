@@ -45,7 +45,7 @@ public class ChatBehaviour : NetworkBehaviour
     {
         GameObject player = GameObject.Find("Player");
         gameObject.GetComponent<MovePlayer>().enabled = false;
-         canvas.transform.GetChild(0).gameObject.SetActive(true);
+        canvas.transform.GetChild(0).gameObject.SetActive(true);
         player.GetComponent<Player>().isDead = true;
         gameController.GetComponent<GameController>().SetDeathState(true);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
@@ -55,10 +55,18 @@ public class ChatBehaviour : NetworkBehaviour
 
     private void HandleResume()
     {
+        GameObject player = GameObject.Find("Player");
         gameController.GetComponent<GameController>().SetPauseState(false);
+        gameController.GetComponent<GameController>().SetDeathState(false);
+        gameController.GetComponent<GameController>().ResetGaps();
         canvas.transform.GetChild(0).gameObject.SetActive(false);
-        GameObject.Find("Player").GetComponent<Rigidbody2D>().WakeUp();
+        player.GetComponent<Rigidbody2D>().constraints =
+            RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+        player.GetComponent<Rigidbody2D>().WakeUp();
+        player.GetComponent<Transform>().position = new Vector3(-1.0f, 0.0f, 0.0f);
         gameObject.GetComponent<MovePlayer>().enabled = true;
+        gameController.GetComponent<GameController>().level =
+            gameController.GetComponent<GameController>().initialLevel;
     }
 
     private void HandleJump(float val)

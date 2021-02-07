@@ -48,9 +48,21 @@ public class Player : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                chatBoxes.ForEach(x =>
+                {
+                    if (x.GetComponent<NetworkIdentity>().isLocalPlayer)
+                        x.GetComponent<ChatBehaviour>().SendResume();
+                });
+            }
+        }
 
         if(!gc.GetPauseState() && !isDead)
         {
+            
             // Initial jump
             if (Input.GetButton("Jump"))
             {
