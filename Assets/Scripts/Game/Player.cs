@@ -116,7 +116,7 @@ public class Player : NetworkBehaviour
         chatBoxes.ForEach(x =>
         {
             if(x.GetComponent<NetworkIdentity>().isLocalPlayer)
-                x.GetComponent<ChatBehaviour>().CmdSendDeath();
+                x.GetComponent<ChatBehaviour>().SendDeath();
         });
     }
 }

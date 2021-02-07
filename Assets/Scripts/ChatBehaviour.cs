@@ -91,6 +91,12 @@ public class ChatBehaviour : NetworkBehaviour
     }
 
     [Client]
+    public void SendDeath()
+    {
+        CmdSendDeath();
+    }
+
+    [Client]
     public void SendJump(float val)
     {
         CmdSendJump(val);
