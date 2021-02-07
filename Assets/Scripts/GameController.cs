@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
     private int level;
+    public int initialLevel;
     private List<String[]> levels = new List<String[]>();
 
     [SerializeField] private uint chatLimit = 150;
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour
         playerRb.Sleep();
         
         level = rand.Next(99);
-
+        initialLevel = level;
         using (var reader = new StreamReader(Application.streamingAssetsPath + "/level.csv"))
         {
             while (!reader.EndOfStream)
@@ -127,11 +128,11 @@ public class GameController : MonoBehaviour
         colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
         colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
 
-        firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
-        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+        // firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
+        // secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
 
-        firstCam.GetComponent<CameraShake>().DeathShake();
-        secondCam.GetComponent<CameraShake>().DeathShake();
+        // firstCam.GetComponent<CameraShake>().DeathShake();
+        // secondCam.GetComponent<CameraShake>().DeathShake();
     }
 
 
