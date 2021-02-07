@@ -12,6 +12,8 @@ public class ChatBehaviour : NetworkBehaviour
     [SerializeField] public GameObject canvas = default;
     [SerializeField] private GameObject gameController = default;
     private static event Action<string> OnMessage;
+    private static event Action OnDeath;
+    private static event Action OnResume;
 
     public void OnEnable()
     {
@@ -23,6 +25,8 @@ public class ChatBehaviour : NetworkBehaviour
     {
         //canvas.SetActive(true);
         OnMessage += HandleNewMessage;
+        OnDeath += HandleDeath;
+        OnResume += HandleResume;
     }
 
     [ClientCallback]
@@ -31,8 +35,22 @@ public class ChatBehaviour : NetworkBehaviour
         if(!hasAuthority)
             return;
         OnMessage -= HandleNewMessage;
+        OnDeath -= HandleDeath;
+        OnResume -= HandleResume;
     }
 
+    private void HandleDeath()
+    {
+        canvas.gameObject.SetActive(true);
+        gameObject.GetComponent<MovePlayer>().enabled = false;
+    }
+
+    private void HandleResume()
+    {
+        canvas.SetActive(false);
+        gameController.GetComponent<GameController>().charCount = 0;      
+        gameObject.GetComponent<MovePlayer>().enabled = true;
+    }
     private void HandleNewMessage(string message)
     {
         chatText.text += message;
@@ -49,12 +67,34 @@ public class ChatBehaviour : NetworkBehaviour
         inputField.text = string.Empty;
         if(gameController.GetComponent<GameController>().IsChatReachedLimit())
         {
-            canvas.SetActive(false);  
-            gameController.GetComponent<GameController>().charCount = 0;      
-            gameObject.GetComponent<MovePlayer>().enabled = true;
+            CmdSendResume();
         }
     }
 
+    [Command]
+    private void CmdSendResume()
+    {
+        RpcHandleResume();
+    }
+
+    [ClientRpc]
+    private void RpcHandleResume()
+    {
+        OnResume?.Invoke();
+    }
+    
+    [Command]
+    public void CmdSendDeath()
+    {
+        RpcHandleDeath();
+    }
+
+    [ClientRpc]
+    private void RpcHandleDeath()
+    {
+        OnDeath?.Invoke();
+    }
+    
     [Command]
     private void CmdSendMessage(string message)
     {
@@ -66,4 +106,28 @@ public class ChatBehaviour : NetworkBehaviour
     {
         OnMessage?.Invoke($"\n{message}");
     }
+    
+    // [Command]
+    // void StopAllPlayersRpc()
+    // {
+    //     List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
+    //     foreach (var playerGO in playerGOs)
+    //     {
+    //         Debug.Log("turning off");
+    //         //playerGO.GetComponent<ChatBehaviour>().canvas.SetActive(true);
+    //         playerGO.GetComponent<MovePlayer>().enabled = false;
+    //     }
+    // }
+
+    // void StopAllPlayers()
+    // {
+    //     List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
+    //     foreach (var playerGO in playerGOs)
+    //     {
+    //         Debug.Log("turning off");
+    //         //playerGO.GetComponent<ChatBehaviour>().canvas.SetActive(true);
+    //         playerGO.GetComponent<MovePlayer>().enabled = false;
+    //     }
+    //     StopAllPlayersRpc();
+    // }
 }

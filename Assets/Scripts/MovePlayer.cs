@@ -40,33 +40,11 @@ public class MovePlayer : NetworkBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(movement * speed, 0.0f);
             if(Input.GetKeyDown(KeyCode.Q))
             {
-                StopAllPlayers();
+                GetComponent<ChatBehaviour>().CmdSendDeath();
             }
         }
     }
 
-    [Command]
-    void StopAllPlayersRpc()
-    {
-        List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
-        foreach (var playerGO in playerGOs)
-        {
-            Debug.Log("turning off");
-            playerGO.GetComponent<ChatBehaviour>().canvas.SetActive(true);
-            playerGO.GetComponent<MovePlayer>().enabled = false;
-        }
-    }
-
-    void StopAllPlayers()
-    {
-        List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
-        foreach (var playerGO in playerGOs)
-        {
-            Debug.Log("turning off");
-            playerGO.GetComponent<ChatBehaviour>().canvas.SetActive(true);
-            playerGO.GetComponent<MovePlayer>().enabled = false;
-        }
-        StopAllPlayersRpc();
-    }
+    
 }
 
