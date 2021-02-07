@@ -19,6 +19,7 @@ public class TheGap : MonoBehaviour
 
     public void Move(float speed)
     {
+        Debug.Log(speed);
         transform.Translate(-speed, 0, 0);
     }
 
@@ -28,9 +29,9 @@ public class TheGap : MonoBehaviour
 
         float gap = (float)(gapRange / 100.0 * 0.1);
 
-        
-        float offset1 = (float)(offset1Range/100.0);
-        float offset2 = (float)(offset2Range/100.0);
+
+        float offset1 = (float)(offset1Range / 100.0);
+        float offset2 = (float)(offset2Range / 100.0);
 
         transform.Rotate((float)rotation * 180, 0, 0);
 

@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
 
     private TheGap gap1;
     private TheGap gap2;
-    public float speed = 0.02f;
+    public float speed = 0.2f;
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
     private int level;
@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
         secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!isDead)
         {
@@ -59,8 +59,8 @@ public class GameController : MonoBehaviour
             if (speedCounter % 90 == 0)
                 speed *= 1.001f;
             UpdateColor();
-        } 
-        else 
+        }
+        else
         {
             // Do death stuff, trigger chat etc
         }
