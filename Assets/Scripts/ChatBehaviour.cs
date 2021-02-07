@@ -12,6 +12,8 @@ public class ChatBehaviour : NetworkBehaviour
     [SerializeField] public GameObject canvas = default;
     [SerializeField] private GameObject gameController = default;
     private static event Action<string> OnMessage;
+    private static event Action OnDeath;
+    private static event Action OnResume;
 
     public void OnEnable()
     {
@@ -23,6 +25,8 @@ public class ChatBehaviour : NetworkBehaviour
     {
         //canvas.SetActive(true);
         OnMessage += HandleNewMessage;
+        OnDeath += HandleDeath;
+        OnResume += HandleResume;
     }
 
     [ClientCallback]
@@ -31,11 +35,31 @@ public class ChatBehaviour : NetworkBehaviour
         if(!hasAuthority)
             return;
         OnMessage -= HandleNewMessage;
+        OnDeath -= HandleDeath;
+        OnResume -= HandleResume;
     }
 
+    private void HandleDeath()
+    {
+        chatText.text = String.Empty;;
+        canvas.gameObject.SetActive(true);
+        gameObject.GetComponent<MovePlayer>().enabled = false;
+    }
+
+    private void HandleResume()
+    {
+        canvas.SetActive(false);
+        gameController.GetComponent<GameController>().charCount = 0;      
+        gameObject.GetComponent<MovePlayer>().enabled = true;
+    }
     private void HandleNewMessage(string message)
     {
+        gameController.GetComponent<GameController>().DoAddChatLen((uint) message.Length);
         chatText.text += message;
+        if(gameController.GetComponent<GameController>().IsChatReachedLimit())
+        {
+            CmdSendResume();
+        }
     }
 
     [Client]
@@ -43,18 +67,34 @@ public class ChatBehaviour : NetworkBehaviour
     {
         if(!Input.GetKeyDown(KeyCode.Return) || string.IsNullOrWhiteSpace(inputField.text) )
             return;
-
-        gameController.GetComponent<GameController>().DoAddChatLen((uint) inputField.text.Length);
         CmdSendMessage(inputField.text);
         inputField.text = string.Empty;
-        if(gameController.GetComponent<GameController>().IsChatReachedLimit())
-        {
-            canvas.SetActive(false);  
-            gameController.GetComponent<GameController>().charCount = 0;      
-            gameObject.GetComponent<MovePlayer>().enabled = true;
-        }
     }
 
+    [Command]
+    private void CmdSendResume()
+    {
+        RpcHandleResume();
+    }
+
+    [ClientRpc]
+    private void RpcHandleResume()
+    {
+        OnResume?.Invoke();
+    }
+    
+    [Command]
+    public void CmdSendDeath()
+    {
+        RpcHandleDeath();
+    }
+
+    [ClientRpc]
+    private void RpcHandleDeath()
+    {
+        OnDeath?.Invoke();
+    }
+    
     [Command]
     private void CmdSendMessage(string message)
     {
@@ -66,4 +106,5 @@ public class ChatBehaviour : NetworkBehaviour
     {
         OnMessage?.Invoke($"\n{message}");
     }
+    
 }
