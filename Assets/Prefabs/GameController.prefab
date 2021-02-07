@@ -43,5 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd526ea3cedc43efafad275b1f380fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRb: {fileID: 0}
+  speed: 0.02
   chatLimit: 150
   charCount: 0

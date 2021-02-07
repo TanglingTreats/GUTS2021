@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        if(!isDead)
+        if(!gc.GetPauseState() && !isDead)
         {
             if (Input.GetButton("Jump") && this.currTime > 0 && !GetIsReleased())
             {

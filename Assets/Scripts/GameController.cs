@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
 
     private TheGap gap1;
     private TheGap gap2;
+
+    private Rigidbody2D playerRb;
     public float speed = 0.02f;
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
@@ -27,12 +29,16 @@ public class GameController : MonoBehaviour
     public uint charCount = 0;
 
     private bool isDead = false;
+    private bool isPause = true;
 
     // Start is called before the first frame update
     void Start()
     {
         gap1 = GameObject.Find("TheGap1").GetComponent<TheGap>();
         gap2 = GameObject.Find("TheGap2").GetComponent<TheGap>();
+        playerRb = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        playerRb.Sleep();
+        
         level = rand.Next(99);
 
         using (var reader = new StreamReader(Application.streamingAssetsPath + "/level.csv"))
@@ -52,18 +58,21 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (!isDead)
+        if (!isPause)
         {
-            gap1.Move(speed);
-            gap2.Move(speed);
-            speedCounter += 1;
-            if (speedCounter % 90 == 0)
-                speed *= 1.001f;
-            UpdateColor();
-        } 
-        else 
-        {
-            // Do death stuff, trigger chat etc
+            if (!isDead)
+            {
+                gap1.Move(speed);
+                gap2.Move(speed);
+                speedCounter += 1;
+                if (speedCounter % 90 == 0)
+                    speed *= 1.001f;
+                UpdateColor();
+            } 
+            else 
+            {
+                // Do death stuff, trigger chat etc
+            }
         }
 
     }
@@ -128,6 +137,16 @@ public class GameController : MonoBehaviour
     {
         this.isDead = flag;
         Debug.Log(this.isDead);
+    }
+
+    public void SetPauseState(bool flag)
+    {
+        this.isPause = flag;
+    }
+
+    public bool GetPauseState()
+    {
+        return this.isPause;
     }
     public bool IsChatReachedLimit()
     {

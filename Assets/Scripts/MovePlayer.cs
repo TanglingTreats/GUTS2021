@@ -34,15 +34,15 @@ public class MovePlayer : NetworkBehaviour
     void FixedUpdate () 
     {
         
-        if(this.isLocalPlayer) 
-        {
-            float movement = Input.GetAxis("Horizontal");	
-            GetComponent<Rigidbody2D>().velocity = new Vector2(movement * speed, 0.0f);
-            if(Input.GetKeyDown(KeyCode.Q))
-            {
-                GetComponent<ChatBehaviour>().CmdSendDeath();
-            }
-        }
+        // if(this.isLocalPlayer) 
+        // {
+        //     float movement = Input.GetAxis("Horizontal");
+        //     GetComponent<Rigidbody2D>().velocity = new Vector2(movement * speed, 0.0f);
+        //     if(Input.GetKeyDown(KeyCode.Q))
+        //     {
+        //         GetComponent<ChatBehaviour>().CmdSendDeath();
+        //     }
+        // }
     }
 
     
