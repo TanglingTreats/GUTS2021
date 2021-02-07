@@ -16,7 +16,10 @@ public class GameController : MonoBehaviour
 
     private TheGap gap1;
     private TheGap gap2;
-    
+
+    private ParticleSystem CloseEffect;
+    private ParticleSystem FarEffect;
+
     public float speed = 0.2f;
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
@@ -33,6 +36,10 @@ public class GameController : MonoBehaviour
     {
         gap1 = GameObject.Find("TheGap1").GetComponent<TheGap>();
         gap2 = GameObject.Find("TheGap2").GetComponent<TheGap>();
+
+        this.CloseEffect = GameObject.Find("CloseEffect").GetComponent<ParticleSystem>();
+        this.FarEffect = GameObject.Find("FarEffect").GetComponent<ParticleSystem>(); 
+
         level = rand.Next(99);
 
         using (var reader = new StreamReader(Application.streamingAssetsPath + "/level.csv"))
@@ -124,6 +131,9 @@ public class GameController : MonoBehaviour
     public void DeathSequence()
     {
         changeColor();
+
+        this.CloseEffect.Pause();
+        this.FarEffect.Pause();
         
         firstCam.GetComponent<CameraShake>().DeathShake();
         secondCam.GetComponent<CameraShake>().DeathShake();

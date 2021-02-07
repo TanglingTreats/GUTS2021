@@ -34,8 +34,9 @@ public class Player : MonoBehaviour
         this.player = GameObject.Find("Player");
         this.playerPos = player.GetComponent<Transform>();
         this.playerBody = player.GetComponent<Rigidbody2D>();
-        this.buttSpark = GameObject.Find("CubeSparks").GetComponent<ParticleSystem>();
 
+        this.buttSpark = GameObject.Find("CubeSparks").GetComponent<ParticleSystem>();
+        
         this.gc = GameObject.Find("GameController").GetComponent<GameController>();
 
         this.currTime = this.timer;
