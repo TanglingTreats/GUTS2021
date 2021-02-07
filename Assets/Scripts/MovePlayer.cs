@@ -12,7 +12,7 @@ public class MovePlayer : NetworkBehaviour
     void Start()
     {
         List<GameObject> playerGOs =  GameObject.FindGameObjectsWithTag("Player").ToList();
-        if (playerGOs.Count >= 2)
+        if (playerGOs.Count >= 1)
         {
             GameObject.Find("Player").GetComponent<Player>().FindChatBoxes();
             GetComponent<ChatBehaviour>().CmdSendResume();

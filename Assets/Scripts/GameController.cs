@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour
 
     private Rigidbody2D playerRb;
     [SerializeField] private float speed;
+    private ParticleSystem CloseEffect;
+    private ParticleSystem FarEffect;
+
     private int speedCounter = 0;
     private System.Random rand = new System.Random();
     private int level;
@@ -39,6 +42,10 @@ public class GameController : MonoBehaviour
         playerRb = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         playerRb.Sleep();
         
+
+        this.CloseEffect = GameObject.Find("CloseEffect").GetComponent<ParticleSystem>();
+        this.FarEffect = GameObject.Find("FarEffect").GetComponent<ParticleSystem>(); 
+
         level = rand.Next(99);
 
         using (var reader = new StreamReader(Application.streamingAssetsPath + "/level.csv"))
@@ -53,7 +60,7 @@ public class GameController : MonoBehaviour
 
         // Get Camera
         // firstCam = GameObject.Find("Player1 Camera").GetComponent<Camera>();
-        // secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
+        secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
     }
 
     void FixedUpdate()
@@ -97,41 +104,43 @@ public class GameController : MonoBehaviour
         }
 
         // firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
-        // secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+    }
+
+    float genColor()
+    {
+        return (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+    }
+
+    private void changeColor()
+    {
+        colorArray1[0] = genColor();
+        colorArray1[1] = genColor();
+        colorArray1[2] = genColor();
+
+        colorArray2[0] = genColor();
+        colorArray2[1] = genColor();
+        colorArray2[2] = genColor();
+
     }
 
     public void Pulse()
     {
-        colorArray1[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray1[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray1[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-
-        colorArray2[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-
-        // firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
-        // secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
-
+        changeColor();
+        
         // firstCam.GetComponent<CameraShake>().Shake(0.3f);
-        // secondCam.GetComponent<CameraShake>().Shake(0.3f);
+        secondCam.GetComponent<CameraShake>().Shake(0.3f);
     }
 
     public void DeathSequence()
     {
-        colorArray1[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray1[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray1[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        changeColor();
 
-        colorArray2[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-        colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
-
-        // firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
-        // secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
-
+        this.CloseEffect.Pause();
+        this.FarEffect.Pause();
+        
         // firstCam.GetComponent<CameraShake>().DeathShake();
-        // secondCam.GetComponent<CameraShake>().DeathShake();
+        secondCam.GetComponent<CameraShake>().DeathShake();
     }
 
 

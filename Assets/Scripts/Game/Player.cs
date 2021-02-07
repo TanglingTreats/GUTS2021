@@ -25,6 +25,7 @@ public class Player : NetworkBehaviour
     private GameObject player;
     private Transform playerPos;
     private Rigidbody2D playerBody;
+    private ParticleSystem buttSpark;
 
     private GameController gc;
 
@@ -37,6 +38,8 @@ public class Player : NetworkBehaviour
         this.playerPos = player.GetComponent<Transform>();
         this.playerBody = player.GetComponent<Rigidbody2D>();
 
+        this.buttSpark = GameObject.Find("CubeSparks").GetComponent<ParticleSystem>();
+        
         this.gc = GameObject.Find("GameController").GetComponent<GameController>();
 
         this.currTime = this.timer;
@@ -53,6 +56,7 @@ public class Player : NetworkBehaviour
             {
                 if (this.currTime == this.timer && this.isReleased && this.isLanded)
                 {
+                    this.buttSpark.Stop();
                     this.isLanded = false;
                     this.jump = true;
                 }
@@ -99,6 +103,8 @@ public class Player : NetworkBehaviour
 
     public void Land()
     {
+        if (!this.isDead)
+            this.buttSpark.Play();
         this.isLanded = true;
         this.ResetJump();
     }

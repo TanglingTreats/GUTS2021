@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 6a60e17b04773a84a94b95a79da6392b
+=======
+guid: e441b0055e48a144a960a6b44671302e
+>>>>>>> gameplay
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -53,6 +53,7 @@ public class ChatBehaviour : NetworkBehaviour
         player.GetComponent<Player>().isDead = true;
         gameController.GetComponent<GameController>().SetDeathState(true);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        GameObject.Find("CubeSparks").GetComponent<ParticleSystem>().Stop();
         gameController.GetComponent<GameController>().DeathSequence();
     }
 
