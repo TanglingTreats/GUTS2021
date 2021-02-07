@@ -19,9 +19,13 @@ public class Wall : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "TheGap")
+        if (collision.gameObject.name == "TheGap1")
         {
-            this.gc.TriggerReset();
+            this.gc.TriggerReset(1);
+        }
+        else if (collision.gameObject.name == "TheGap2")
+        {
+            this.gc.TriggerReset(2);
         }
     }
 }

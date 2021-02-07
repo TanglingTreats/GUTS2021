@@ -12,8 +12,8 @@ public class TheGap : MonoBehaviour
 
     void Start()
     {
-        P1 = GameObject.Find("Player1 Tri").GetComponent<Transform>();
-        P2 = GameObject.Find("Player2 Tri").GetComponent<Transform>();
+        P1 = this.transform.GetChild(0).GetComponent<Transform>();
+        P2 = this.transform.GetChild(1).GetComponent<Transform>();
     }
 
 
@@ -22,19 +22,21 @@ public class TheGap : MonoBehaviour
         transform.Translate(-speed, 0, 0);
     }
 
-    public void Reset(int yRange, int gapRange, int rotation)
+    public void Reset(int yRange, int gapRange, int rotation, int offset1Range, int offset2Range)
     {
-        // TODO: RNGesus y position
-        double y = -0.24 + yRange / 100.0 * (0.24 * 2);
+        float y = (float)(-0.24 + yRange / 100.0 * (0.24 * 2));
 
-        double gap = gapRange / 100.0 * 0.1;
+        float gap = (float)(gapRange / 100.0 * 0.1);
 
+        
+        float offset1 = (float)(offset1Range/100.0);
+        float offset2 = (float)(offset2Range/100.0);
 
         transform.Rotate((float)rotation * 180, 0, 0);
 
-        P1.localPosition = new Vector3(0, 0.8f + (float)gap, 0);
-        P2.localPosition = new Vector3(0, -0.8f - (float)gap, 0);
-        transform.position = new Vector3(2, (float)y, 0);
+        P1.localPosition = new Vector3(offset1, 0.8f + gap, 0);
+        P2.localPosition = new Vector3(offset2, -0.8f - gap, 0);
+        transform.position = new Vector3(3, y, 0);
     }
 
 }

@@ -10,11 +10,13 @@ public class GameController : MonoBehaviour
     Camera secondCam;
 
     int colorChange = 0;
-    float colorStep = 0.035f;
+    float colorStep = 0.01f;
     float[] colorArray1 = new float[] { 0.4f, 1f, 0.4f };
     float[] colorArray2 = new float[] { 0.4f, 1f, 0.4f };
 
-    TheGap gap;
+    TheGap gap1;
+    TheGap gap2;
+
     float speed = 0.02f;
     int speedCounter = 0;
     System.Random rand = new System.Random();
@@ -27,7 +29,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        gap = GameObject.Find("TheGap").GetComponent<TheGap>();
+        gap1 = GameObject.Find("TheGap1").GetComponent<TheGap>();
+        gap2 = GameObject.Find("TheGap2").GetComponent<TheGap>();
         level = rand.Next(99);
 
         using (var reader = new StreamReader(Application.streamingAssetsPath + "/level.csv"))
@@ -47,7 +50,8 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        gap.Move(speed);
+        gap1.Move(speed);
+        gap2.Move(speed);
         speedCounter += 1;
         if (speedCounter % 90 == 0)
             speed *= 1.001f;
@@ -82,13 +86,13 @@ public class GameController : MonoBehaviour
 
     public void Pulse()
     {
-        colorArray1[0] = rand.Next(100) / 100f;
-        colorArray1[1] = rand.Next(100) / 100f;
-        colorArray1[2] = rand.Next(100) / 100f;
+        colorArray1[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray1[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray1[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
 
-        colorArray2[0] = rand.Next(100) / 100f;
-        colorArray2[1] = rand.Next(100) / 100f;
-        colorArray2[2] = rand.Next(100) / 100f;
+        colorArray2[0] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray2[1] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
+        colorArray2[2] = (float)((rand.Next(100) / 100f * 0.6) + 0.4f);
 
         firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
         secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
@@ -104,9 +108,13 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void TriggerReset()
+    public void TriggerReset(int gapNumber)
     {
-        gap.Reset(Int32.Parse(levels[level][0]), Int32.Parse(levels[level][1]), Int32.Parse(levels[level][2]));
+        if (gapNumber == 1)
+            gap1.Reset(Int32.Parse(levels[level][0]), Int32.Parse(levels[level][1]), Int32.Parse(levels[level][2]), Int32.Parse(levels[level][3]), Int32.Parse(levels[level][4]));
+        else
+            gap2.Reset(Int32.Parse(levels[level][0]), Int32.Parse(levels[level][1]), Int32.Parse(levels[level][2]), Int32.Parse(levels[level][3]), Int32.Parse(levels[level][4]));
+
         level = (level + 1) % 100;
     }
 }
