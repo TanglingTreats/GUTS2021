@@ -6,6 +6,13 @@ using System.IO;
 
 public class GameController : MonoBehaviour
 {
+    Camera firstCam;
+    Camera secondCam;
+
+    int colorChange = 0;
+    float colorStep = 0.035f;
+    float[] colorArray1 = new float[] { 0.4f, 1f, 0.4f };
+    float[] colorArray2 = new float[] { 0.4f, 1f, 0.4f };
 
     private TheGap gap;
     public float speed = 0.02f;
@@ -34,6 +41,10 @@ public class GameController : MonoBehaviour
                 levels.Add(values);
             }
         }
+
+        // Get Camera
+        firstCam = GameObject.Find("Player1 Camera").GetComponent<Camera>();
+        secondCam = GameObject.Find("Player2 Camera").GetComponent<Camera>();
     }
 
     void Update()
@@ -44,12 +55,53 @@ public class GameController : MonoBehaviour
             speedCounter += 1;
             if (speedCounter % 90 == 0)
                 speed *= 1.001f;
+            UpdateColor();
         } 
         else 
         {
             // Do death stuff, trigger chat etc
         }
 
+    }
+
+    void UpdateColor()
+    {
+        if ((colorArray1[colorChange] + colorStep) <= 1 && (colorArray1[colorChange] + colorStep) >= 0.4f)
+        {
+            colorArray1[colorChange] += colorStep;
+        }
+        else
+        {
+            colorChange = (colorChange + 1) % 3;
+            colorStep = -colorStep;
+        }
+
+        if ((colorArray2[colorChange] + colorStep) <= 1 && (colorArray2[colorChange] + colorStep) >= 0.4f)
+        {
+            colorArray2[colorChange] += colorStep;
+        }
+        else
+        {
+            colorChange = (colorChange + 1) % 3;
+            colorStep = -colorStep;
+        }
+
+        firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
+        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
+    }
+
+    public void Pulse()
+    {
+        colorArray1[0] = rand.Next(100) / 100f;
+        colorArray1[1] = rand.Next(100) / 100f;
+        colorArray1[2] = rand.Next(100) / 100f;
+
+        colorArray2[0] = rand.Next(100) / 100f;
+        colorArray2[1] = rand.Next(100) / 100f;
+        colorArray2[2] = rand.Next(100) / 100f;
+
+        firstCam.backgroundColor = new Color(colorArray1[0], colorArray1[1], colorArray1[2], 0.8f);
+        secondCam.backgroundColor = new Color(colorArray2[0], colorArray2[1], colorArray2[2], 0.8f);
     }
 
 
